@@ -1,0 +1,55 @@
+Approach
+
+We simulate addition like we do by hand:
+
+Initialize a dummy head for the result list.
+
+Maintain a carry (initially 0).
+
+Traverse both linked lists:
+
+Sum the digits and carry.
+
+Create a new node for (sum % 10).
+
+Update carry = sum / 10.
+
+If there’s a carry left after the loop, add it as a final node.
+
+Code
+// Definition for singly-linked list.
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        int carry = 0;
+
+        while (l1 != null || l2 != null || carry != 0) {
+            int sum = carry;
+
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
+            }
+
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+
+            carry = sum / 10;
+            curr.next = new ListNode(sum % 10);
+            curr = curr.next;
+        }
+
+        return dummy.next;
+    }
+}
